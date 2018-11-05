@@ -11,10 +11,8 @@ public class Main
     {
         Scanner sc = new Scanner(System.in);
 
-        Personnage perso1 = new Personnage();
-        perso1.setId(1);
-        Personnage perso2 = new Personnage();
-        perso2.setId(2);
+        Personnage perso1 = new Personnage(1);
+        Personnage perso2 = new Personnage(2);
 
         // Création du personnage du Joueur 1
         System.out.println("Creation du personnage du Joueur 1");
@@ -67,12 +65,27 @@ public class Main
         }
         while(classe < 1 || classe > 3);
 
+        // Lancement du jeu jusqu'à ce que l'un des 2 personnages n'ai plus de PV
         do
         {
-            System.out.println("Joueur 1 (" + perso1.getVie() + " Vitalité) veuillez choisir votre action (1 : Attaque Basique, 2 : Attaque Spéciale)");
-            perso1.attaqueBasiqueOuSpeciale()
-            classe = sc.nextInt();
+            perso1.sortBasiqueOuSpecial(perso2);
+            if( perso2.getVie() <= 0)
+                break;
+            perso2.sortBasiqueOuSpecial(perso1);
         }
         while( perso1.getVie() > 0  &&  perso2.getVie() > 0 );
+
+        if( perso1.getVie() <= 0  &&  perso2.getVie() <= 0)
+        {
+            System.out.println("Ex eaquo, les 2 sont morts");
+        }
+        else if( perso1.getVie() <= 0 )
+        {
+            System.out.println("Joueur 1 a perdu");
+        }
+        else if( perso2.getVie() <= 0 )
+        {
+            System.out.println("Joueur 2 a perdu");
+        }
     }
 }

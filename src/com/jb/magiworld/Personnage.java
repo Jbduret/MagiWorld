@@ -13,6 +13,10 @@ public class Personnage
         int agilite;
         int intelligence;
 
+        String basique;
+        String special;
+
+    // Constructeur de la classe Personnage
     public Personnage()
     {
         do
@@ -27,6 +31,10 @@ public class Personnage
         while(niveau != (force + agilite + intelligence));
         this.vie = 5*niveau;
     }
+    public Personnage(int idJoueur)
+    {
+        this.id = idJoueur;
+    }
 
     protected void presenterPerso()
     {
@@ -37,32 +45,40 @@ public class Personnage
         System.out.print(this.intelligence + " d'intelligence !\n\n");
     }
 
-    public void attaqueBasiqueOuSpeciale(Personnage perso)
+    public void sortBasiqueOuSpecial(Personnage perso)
     {
         Scanner sc = new Scanner(System.in);
-
         int action;
         do
         {
-            System.out.println("Joueur " + id + " (" + perso1.getVie() + " Vitalité) veuillez choisir votre action (1 : Attaque Basique, 2 : Attaque Spéciale)");
+            System.out.println("Joueur " + id + " (" + vie + " Vitalité) veuillez choisir votre action (1 : Attaque Basique, 2 : Attaque Spéciale)");
             action = sc.nextInt();
             if (action == 1 || action == 2)
             {
-                System.out.println("Joueur " + id + " utilise ");
                 if( action == 1)
-                    attaqueBasique(perso);
+                    sortBasique(perso);
                 else
-                    attaqueSpeciale(perso);
+                    sortSpecial(perso);
             }
             else
                 System.out.println("\"Attention ! Action = Basique (1) ou Action = Speciale (2) ... Veuillez recommencer !\"");
         }
-        while( (action != 1 || action != 2));
+        while( (action != 1 && action != 2));
     }
 
-    public void setId(int id)
+    public void sortBasique(Personnage perso)
     {
-        this.id = id;
+        System.out.print("Joueur " + id + " utilise " + basique + " et inflige ");
+    }
+
+    public void sortSpecial(Personnage perso)
+    {
+        System.out.print("Joueur " + id + " utilise " + special);
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public int getVie()
@@ -70,11 +86,11 @@ public class Personnage
         return vie;
     }
 
-    public int getNiveau()
+    public void setVie( int vie)
     {
-        return niveau;
+        this.vie = vie;
     }
-
+    
     public void setNiveau()
     {
         Scanner sc = new Scanner(System.in);
@@ -86,11 +102,6 @@ public class Personnage
                 System.out.println("Niveau invalide ... Veuillez choisir un niveau entre 0 et 100");
         }
         while( niveau < 0 || niveau > 100 );
-    }
-
-    public int getForce()
-    {
-        return force;
     }
 
     public void setForce()
@@ -106,11 +117,6 @@ public class Personnage
         while( force < 0 || force > niveau );
     }
 
-    public int getAgilite()
-    {
-        return agilite;
-    }
-
     public void setAgilite()
     {
         Scanner sc = new Scanner(System.in);
@@ -122,11 +128,6 @@ public class Personnage
                 System.out.println("Agilité invalide ... Veuillez choisir une agilité entre 0 et " + (niveau - force));
         }
         while(agilite < 0 || agilite > (niveau - force));
-    }
-
-    public int getIntelligence()
-    {
-        return intelligence;
     }
 
     public void setIntelligence()
